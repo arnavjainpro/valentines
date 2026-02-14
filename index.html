@@ -14,6 +14,23 @@
       color: #fff;
       min-height: 100vh;
       overflow-x: hidden;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="20">❤️</text></svg>') 12 12, auto;
+    }
+
+    /* ── Rose Petal Animation ── */
+    .rose-petal {
+      position: absolute;
+      top: -60px;
+      font-size: 18px;
+      opacity: 0;
+      animation: petalFall linear infinite;
+      z-index: 0;
+    }
+    @keyframes petalFall {
+      0%   { transform: translateY(0) rotateZ(0deg) rotateY(0deg); opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(110vh) rotateZ(720deg) rotateY(180deg); opacity: 0; }
     }
 
     /* ── Floating Hearts Background ── */
@@ -28,9 +45,16 @@
     .floating-heart {
       position: absolute;
       bottom: -60px;
-      font-size: 20px;
+      font-size: 30px;
       opacity: 0;
       animation: floatUp linear infinite;
+      pointer-events: auto;
+      transition: transform 0.2s;
+      padding: 15px;
+      cursor: pointer;
+    }
+    .floating-heart:hover {
+      transform: scale(1.4);
     }
     @keyframes floatUp {
       0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
@@ -107,8 +131,15 @@
       font-family: 'Dancing Script', cursive;
       font-size: 3.2rem;
       color: #ff6b95;
-      text-shadow: 0 0 30px rgba(255, 107, 149, 0.5);
+      text-shadow: 0 0 30px rgba(255, 107, 149, 0.8),
+                   0 0 60px rgba(255, 107, 149, 0.5),
+                   0 0 90px rgba(255, 107, 149, 0.3);
       margin-bottom: 10px;
+      animation: textGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes textGlow {
+      from { text-shadow: 0 0 30px rgba(255, 107, 149, 0.8), 0 0 60px rgba(255, 107, 149, 0.5), 0 0 90px rgba(255, 107, 149, 0.3); }
+      to   { text-shadow: 0 0 40px rgba(255, 107, 149, 1), 0 0 80px rgba(255, 107, 149, 0.7), 0 0 120px rgba(255, 107, 149, 0.5); }
     }
     .hero .subtitle {
       font-size: 1.1rem;
@@ -141,7 +172,13 @@
       padding: 30px 25px;
       margin: 25px 0;
       backdrop-filter: blur(10px);
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s, opacity 0.6s, filter 0.6s;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     .card:hover {
       transform: translateY(-4px);
@@ -156,6 +193,8 @@
       font-size: 1.8rem;
       color: #ff8aad;
       margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(255, 138, 173, 0.6),
+                   0 0 40px rgba(255, 138, 173, 0.4);
     }
     .card p {
       font-size: 1rem;
@@ -306,11 +345,125 @@
       text-align: left;
       padding: 10px 15px;
     }
+    .love-letter p {
+      opacity: 0;
+    }
+    .love-letter p.typing {
+      opacity: 1;
+      overflow: hidden;
+      border-right: 2px solid #ff8aad;
+      white-space: nowrap;
+      animation: typewriter 4s steps(80) forwards, blinkCursor 0.75s step-end infinite;
+    }
+    .love-letter p.typing-done {
+      opacity: 1;
+      border-right: none;
+      white-space: normal;
+    }
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blinkCursor {
+      50% { border-color: transparent; }
+    }
     .love-letter .signature {
       text-align: right;
       margin-top: 15px;
       color: #ff8aad;
       font-size: 1.4rem;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .love-letter .signature.show {
+      opacity: 1;
+    }
+
+    /* ── Secret Easter Egg Modal ── */
+    .secret-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: linear-gradient(135deg, #ff6b95, #ff9ec0);
+      border: 3px solid #fff;
+      border-radius: 30px;
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      z-index: 10000;
+      text-align: center;
+      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    .secret-modal.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .secret-modal h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .secret-modal p {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .secret-modal button {
+      background: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 30px;
+      color: #ff6b95;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .secret-modal button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+    .secret-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .secret-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .heart-click-hint {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 107, 149, 0.9);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-family: 'Quicksand', sans-serif;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .heart-click-hint.show {
+      opacity: 1;
     }
 
     /* ── Polaroid Gallery ── */
@@ -320,18 +473,49 @@
       gap: 20px;
       flex-wrap: wrap;
       margin-top: 10px;
+      perspective: 1000px;
+    }
+    .polaroid-wrapper {
+      width: 140px;
+      height: 190px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      transform: rotate(var(--rot));
+    }
+    .polaroid-wrapper:hover {
+      transform: rotateY(180deg) rotate(0deg);
     }
     .polaroid {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
       background: #fff;
       border-radius: 4px;
       padding: 10px 10px 30px;
-      width: 140px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transform: rotate(var(--rot));
-      transition: transform 0.3s;
     }
-    .polaroid:hover {
-      transform: rotate(0deg) scale(1.08);
+    .polaroid-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      background: linear-gradient(135deg, #ff6b95, #ff9ec0);
+      border-radius: 4px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transform: rotateY(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .polaroid-back-text {
+      font-family: 'Dancing Script', cursive;
+      color: #fff;
+      font-size: 1.1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     .polaroid-img {
       width: 120px;
@@ -387,6 +571,15 @@
   <!-- Floating hearts background -->
   <div class="hearts-bg" id="heartsBg"></div>
 
+  <!-- Secret Easter Egg -->
+  <div class="secret-overlay" id="secretOverlay"></div>
+  <div class="secret-modal" id="secretModal">
+    <h2>You Found It! 💝</h2>
+    <p>I knew you would... you always notice the little things. That's just one of the million reasons why tonight is going to be so special. Can't wait to see you! ✨💕</p>
+    <button onclick="closeSecret()">That's so sweet! 🥰</button>
+  </div>
+  <div class="heart-click-hint" id="heartHint">💡 Keep clicking hearts... (<span id="clickCount">0</span>/3)</div>
+
   <!-- Music Player -->
   <div class="music-bar" id="musicBar">
     <button class="music-btn" id="musicBtn" title="Play / Pause">▶️</button>
@@ -408,6 +601,7 @@
 
     <!-- Envelope to open -->
     <div class="envelope-wrapper" id="envelope">
+      <p style="font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #ff9ec0; margin-bottom: 20px;">February 14, 2026</p>
       <div class="envelope-icon">💌</div>
       <p class="envelope-hint">tap to open</p>
     </div>
@@ -463,29 +657,49 @@
         <div class="card-icon">📸</div>
         <h2>Our Little Moments</h2>
         <div class="gallery">
-          <div class="polaroid" style="--rot: -4deg;">
-            <div class="polaroid-img" style="padding:0; overflow:hidden;">
-              <video src="IMG_5414.mov" muted autoplay loop playsinline style="width:120px; height:120px; object-fit:cover; border-radius:2px;"></video>
+          <div class="polaroid-wrapper" style="--rot: -4deg;">
+            <div class="polaroid">
+              <div class="polaroid-img" style="padding:0; overflow:hidden;">
+                <video src="IMG_5414.mov" muted autoplay loop playsinline style="width:120px; height:120px; object-fit:cover; border-radius:2px;"></video>
+              </div>
+              <div class="polaroid-caption">Us being us</div>
             </div>
-            <div class="polaroid-caption">Us being us</div>
+            <div class="polaroid-back">
+              <div class="polaroid-back-text">Just being ourselves together 💕</div>
+            </div>
           </div>
-          <div class="polaroid" style="--rot: 3deg;">
-            <div class="polaroid-img" style="padding:0; overflow:hidden;">
-              <img src="drives.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+          <div class="polaroid-wrapper" style="--rot: 3deg;">
+            <div class="polaroid">
+              <div class="polaroid-img" style="padding:0; overflow:hidden;">
+                <img src="drives.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+              </div>
+              <div class="polaroid-caption">Late night drives</div>
             </div>
-            <div class="polaroid-caption">Late night drives</div>
+            <div class="polaroid-back">
+              <div class="polaroid-back-text">Our favorite escape 🚗✨</div>
+            </div>
           </div>
-          <div class="polaroid" style="--rot: -2deg;">
-            <div class="polaroid-img" style="padding:0; overflow:hidden;">
-              <img src="food.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+          <div class="polaroid-wrapper" style="--rot: -2deg;">
+            <div class="polaroid">
+              <div class="polaroid-img" style="padding:0; overflow:hidden;">
+                <img src="food.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+              </div>
+              <div class="polaroid-caption">Random food runs</div>
             </div>
-            <div class="polaroid-caption">Random food runs</div>
+            <div class="polaroid-back">
+              <div class="polaroid-back-text">Always hungry together 🍕😄</div>
+            </div>
           </div>
-          <div class="polaroid" style="--rot: 5deg;">
-            <div class="polaroid-img" style="padding:0; overflow:hidden;">
-              <img src="late_night.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+          <div class="polaroid-wrapper" style="--rot: 5deg;">
+            <div class="polaroid">
+              <div class="polaroid-img" style="padding:0; overflow:hidden;">
+                <img src="late_night.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+              </div>
+              <div class="polaroid-caption">3 AM talks</div>
             </div>
-            <div class="polaroid-caption">3 AM talks</div>
+            <div class="polaroid-back">
+              <div class="polaroid-back-text">Best conversations ever 🌙💬</div>
+            </div>
           </div>
         </div>
       </section>
@@ -508,20 +722,17 @@
       <div class="divider">♥ ♥ ♥</div>
 
       <!-- Love Letter -->
-      <section class="card">
+      <section class="card" id="loveLetterCard">
         <div class="card-icon">📝</div>
         <h2>A Little Note</h2>
         <div class="love-letter">
-          <p>
-            To my favorite person in the world,<br/><br/>
-            Every day with you feels like Valentine's Day.
-            You make everything brighter, warmer, and infinitely
-            more beautiful. Tonight is about celebrating <em>us, </em>
-            the little things, the big things, and everything
-            in between.<br/><br/>
-            I can't wait to see you at 8. 🌹<br/>
+          <p id="letterText" data-text="To my favorite person in the world,
+
+Every day with you feels like Valentine's Day. You make everything brighter, warmer, and infinitely more beautiful. Tonight is about celebrating us, the little things, the big things, and everything in between.
+
+I can't wait to see you at 8. 🌹">
           </p>
-          <p class="signature">— With all my love 💋</p>
+          <p class="signature" id="letterSignature">— With all my love 💋</p>
         </div>
       </section>
 
@@ -555,18 +766,167 @@
     // ── Floating Hearts ──
     const heartsBg = document.getElementById('heartsBg');
     const heartEmojis = ['❤️','💕','💖','💗','💓','💘','💝','🩷','🤍','✨'];
+    let heartClickCount = 0;
+    const requiredClicks = 3;
+    
     function spawnHeart() {
       const heart = document.createElement('span');
       heart.classList.add('floating-heart');
       heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
       heart.style.left = Math.random() * 100 + '%';
-      heart.style.fontSize = (14 + Math.random() * 20) + 'px';
-      heart.style.animationDuration = (6 + Math.random() * 8) + 's';
+      heart.style.fontSize = (24 + Math.random() * 16) + 'px';
+      heart.style.animationDuration = (8 + Math.random() * 6) + 's';
       heart.style.animationDelay = Math.random() * 2 + 's';
+      
+      // Make hearts clickable for Easter egg
+      heart.style.cursor = 'pointer';
+      heart.style.pointerEvents = 'auto';
+      heart.addEventListener('click', (e) => {
+        e.stopPropagation();
+        heartClickCount++;
+        document.getElementById('clickCount').textContent = heartClickCount;
+        
+        // Show hint after first click
+        if (heartClickCount === 1) {
+          document.getElementById('heartHint').classList.add('show');
+        }
+        
+        // Create sparkle effect on click
+        const sparkle = document.createElement('span');
+        sparkle.textContent = '✨';
+        sparkle.style.position = 'fixed';
+        sparkle.style.left = e.clientX + 'px';
+        sparkle.style.top = e.clientY + 'px';
+        sparkle.style.fontSize = '24px';
+        sparkle.style.pointerEvents = 'none';
+        sparkle.style.zIndex = '10001';
+        sparkle.style.animation = 'sparkleFade 0.8s forwards';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 800);
+        
+        // Reveal secret after required clicks
+        if (heartClickCount >= requiredClicks) {
+          setTimeout(() => {
+            document.getElementById('secretOverlay').classList.add('show');
+            document.getElementById('secretModal').classList.add('show');
+            document.getElementById('heartHint').classList.remove('show');
+            heartClickCount = 0; // Reset for next time
+          }, 500);
+        }
+      });
+      
       heartsBg.appendChild(heart);
       setTimeout(() => heart.remove(), 16000);
     }
     setInterval(spawnHeart, 400);
+
+    function closeSecret() {
+      document.getElementById('secretOverlay').classList.remove('show');
+      document.getElementById('secretModal').classList.remove('show');
+      document.getElementById('clickCount').textContent = '0';
+    }
+    
+    // Close on overlay click
+    document.getElementById('secretOverlay').addEventListener('click', closeSecret);
+
+    // ── Rose Petals ──
+    const rosePetals = ['🌹','🥀','🌺','💐'];
+    function spawnPetal() {
+      const petal = document.createElement('span');
+      petal.classList.add('rose-petal');
+      petal.textContent = rosePetals[Math.floor(Math.random() * rosePetals.length)];
+      petal.style.left = Math.random() * 100 + '%';
+      petal.style.fontSize = (16 + Math.random() * 12) + 'px';
+      petal.style.animationDuration = (8 + Math.random() * 6) + 's';
+      petal.style.animationDelay = Math.random() * 3 + 's';
+      heartsBg.appendChild(petal);
+      setTimeout(() => petal.remove(), 16000);
+    }
+    setInterval(spawnPetal, 600);
+
+    // ── Parallax Scrolling ──
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hearts = document.querySelectorAll('.floating-heart');
+      hearts.forEach((heart, i) => {
+        const speed = 0.3 + (i % 3) * 0.2;
+        heart.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+      const petals = document.querySelectorAll('.rose-petal');
+      petals.forEach((petal, i) => {
+        const speed = 0.2 + (i % 3) * 0.15;
+        petal.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+
+    // ── Smooth Scroll Animations ──
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards and sections
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => observer.observe(card));
+    });
+
+    // ── Typing Animation for Love Letter ──
+    const letterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('typed')) {
+          entry.target.classList.add('typed');
+          startTyping();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const letterCard = document.getElementById('loveLetterCard');
+      if (letterCard) {
+        letterObserver.observe(letterCard);
+      }
+    });
+
+    function startTyping() {
+      const letterText = document.getElementById('letterText');
+      const signature = document.getElementById('letterSignature');
+      const fullText = letterText.getAttribute('data-text');
+      
+      let charIndex = 0;
+      letterText.style.whiteSpace = 'pre-wrap';
+      letterText.style.opacity = '1';
+      letterText.textContent = '';
+      
+      function typeChar() {
+        if (charIndex < fullText.length) {
+          letterText.textContent += fullText[charIndex];
+          charIndex++;
+          
+          // Variable speed - faster for spaces, slower for punctuation
+          let delay = 30;
+          if (fullText[charIndex - 1] === ' ') delay = 20;
+          if (['.', ',', '!', '?'].includes(fullText[charIndex - 1])) delay = 200;
+          if (fullText[charIndex - 1] === '\n') delay = 300;
+          
+          setTimeout(typeChar, delay);
+        } else {
+          // Show signature after typing is done
+          setTimeout(() => {
+            signature.classList.add('show');
+          }, 500);
+        }
+      }
+      
+      typeChar();
+    }
 
     // ── Sparkle Cursor ──
     document.addEventListener('mousemove', (e) => {
