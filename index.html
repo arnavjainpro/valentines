@@ -25,6 +25,7 @@
       opacity: 0;
       animation: petalFall linear infinite;
       z-index: 0;
+      will-change: transform, opacity;
     }
     @keyframes petalFall {
       0%   { transform: translateY(0) rotateZ(0deg) rotateY(0deg); opacity: 0; }
@@ -49,9 +50,9 @@
       opacity: 0;
       animation: floatUp linear infinite;
       pointer-events: auto;
-      transition: transform 0.2s;
       padding: 15px;
       cursor: pointer;
+      will-change: transform, opacity;
     }
     .floating-heart:hover {
       transform: scale(1.4);
@@ -171,17 +172,15 @@
       border-radius: 20px;
       padding: 30px 25px;
       margin: 25px 0;
-      backdrop-filter: blur(10px);
-      transition: transform 0.3s, box-shadow 0.3s, opacity 0.6s, filter 0.6s;
       opacity: 0;
       transform: translateY(50px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .card.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    .card:hover {
-      transform: translateY(-4px);
+    .card.visible:hover {
       box-shadow: 0 12px 40px rgba(255, 107, 149, 0.15);
     }
     .card-icon {
@@ -665,7 +664,7 @@
               <div class="polaroid-caption">Us being us</div>
             </div>
             <div class="polaroid-back">
-              <div class="polaroid-back-text">Just being ourselves together 💕</div>
+              <div class="polaroid-back-text">Just being ourselves together</div>
             </div>
           </div>
           <div class="polaroid-wrapper" style="--rot: 3deg;">
@@ -676,7 +675,7 @@
               <div class="polaroid-caption">Late night drives</div>
             </div>
             <div class="polaroid-back">
-              <div class="polaroid-back-text">Our favorite escape 🚗✨</div>
+              <div class="polaroid-back-text">Our favorite escape</div>
             </div>
           </div>
           <div class="polaroid-wrapper" style="--rot: -2deg;">
@@ -687,7 +686,7 @@
               <div class="polaroid-caption">Random food runs</div>
             </div>
             <div class="polaroid-back">
-              <div class="polaroid-back-text">Always hungry together 🍕😄</div>
+              <div class="polaroid-back-text">Always hungry together</div>
             </div>
           </div>
           <div class="polaroid-wrapper" style="--rot: 5deg;">
@@ -698,7 +697,7 @@
               <div class="polaroid-caption">3 AM talks</div>
             </div>
             <div class="polaroid-back">
-              <div class="polaroid-back-text">Best conversations ever 🌙💬</div>
+              <div class="polaroid-back-text">Best conversations ever</div>
             </div>
           </div>
         </div>
@@ -818,7 +817,7 @@ I can't wait to see you at 8. 🌹">
       heartsBg.appendChild(heart);
       setTimeout(() => heart.remove(), 16000);
     }
-    setInterval(spawnHeart, 400);
+    setInterval(spawnHeart, 800);
 
     function closeSecret() {
       document.getElementById('secretOverlay').classList.remove('show');
@@ -842,22 +841,7 @@ I can't wait to see you at 8. 🌹">
       heartsBg.appendChild(petal);
       setTimeout(() => petal.remove(), 16000);
     }
-    setInterval(spawnPetal, 600);
-
-    // ── Parallax Scrolling ──
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      const hearts = document.querySelectorAll('.floating-heart');
-      hearts.forEach((heart, i) => {
-        const speed = 0.3 + (i % 3) * 0.2;
-        heart.style.transform = `translateY(${scrolled * speed}px)`;
-      });
-      const petals = document.querySelectorAll('.rose-petal');
-      petals.forEach((petal, i) => {
-        const speed = 0.2 + (i % 3) * 0.15;
-        petal.style.transform = `translateY(${scrolled * speed}px)`;
-      });
-    });
+    setInterval(spawnPetal, 1200);
 
     // ── Smooth Scroll Animations ──
     const observerOptions = {
