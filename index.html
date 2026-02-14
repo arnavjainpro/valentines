@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Valentine's Day 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #1a0a0a, #2d0515, #1a0a1e);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Floating Hearts Background ── */
+    .hearts-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .floating-heart {
+      position: absolute;
+      bottom: -60px;
+      font-size: 20px;
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-110vh) rotate(360deg) scale(0.5); opacity: 0; }
+    }
+
+    /* ── Sparkle Cursor Trail ── */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 12px;
+      z-index: 9999;
+      animation: sparkleFade 0.8s forwards;
+    }
+    @keyframes sparkleFade {
+      0%   { opacity: 1; transform: scale(1) translateY(0); }
+      100% { opacity: 0; transform: scale(0) translateY(-30px); }
+    }
+
+    /* ── Main Container ── */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      text-align: center;
+    }
+
+    /* ── Envelope Animation ── */
+    .envelope-wrapper {
+      margin: 30px auto 0;
+      cursor: pointer;
+      animation: gentleBounce 2s ease-in-out infinite;
+    }
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    .envelope-icon {
+      font-size: 80px;
+      transition: transform 0.4s;
+    }
+    .envelope-wrapper:hover .envelope-icon {
+      transform: scale(1.15) rotate(-5deg);
+    }
+    .envelope-hint {
+      font-size: 14px;
+      color: #ff9ec0;
+      margin-top: 8px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50%      { opacity: 1; }
+    }
+
+    /* ── Revealed Content ── */
+    .content {
+      display: none;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .content.show { display: block; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Hero Section ── */
+    .hero h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.2rem;
+      color: #ff6b95;
+      text-shadow: 0 0 30px rgba(255, 107, 149, 0.5);
+      margin-bottom: 10px;
+    }
+    .hero .subtitle {
+      font-size: 1.1rem;
+      color: #ffb3cb;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+    .hero .date-line {
+      margin-top: 18px;
+      font-size: 0.95rem;
+      color: #cc8ea5;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      margin: 35px auto;
+      font-size: 22px;
+      letter-spacing: 12px;
+      color: #ff6b95;
+      opacity: 0.6;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 107, 149, 0.2);
+      border-radius: 20px;
+      padding: 30px 25px;
+      margin: 25px 0;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(255, 107, 149, 0.15);
+    }
+    .card-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+    .card h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: #ff8aad;
+      margin-bottom: 10px;
+    }
+    .card p {
+      font-size: 1rem;
+      color: #e0b0c0;
+      line-height: 1.7;
+    }
+    .card .highlight {
+      color: #ffcfdf;
+      font-weight: 600;
+      font-size: 1.15rem;
+    }
+
+    /* ── Countdown ── */
+    .countdown-section { margin: 30px 0; }
+    .countdown-section h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: #ff8aad;
+      margin-bottom: 18px;
+    }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .countdown-box {
+      background: rgba(255, 107, 149, 0.12);
+      border: 1px solid rgba(255, 107, 149, 0.25);
+      border-radius: 16px;
+      padding: 18px 22px;
+      min-width: 85px;
+    }
+    .countdown-box .num {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ff6b95;
+      display: block;
+    }
+    .countdown-box .label {
+      font-size: 0.75rem;
+      color: #cc8ea5;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 4px;
+    }
+
+    /* ── Love Reasons ── */
+    .reasons {
+      text-align: left;
+      padding: 0 10px;
+    }
+    .reasons li {
+      list-style: none;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 107, 149, 0.1);
+      font-size: 1rem;
+      color: #e0b0c0;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+    }
+    .reasons li:last-child { border-bottom: none; }
+    .reasons li span.heart-bullet {
+      margin-right: 10px;
+      color: #ff6b95;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ── Music Toggle ── */
+    .music-bar {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(30, 10, 20, 0.85);
+      border: 1px solid rgba(255, 107, 149, 0.3);
+      border-radius: 50px;
+      padding: 8px 16px 8px 10px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transition: opacity 0.4s;
+    }
+    .music-btn {
+      background: rgba(255, 107, 149, 0.2);
+      border: 1px solid rgba(255, 107, 149, 0.4);
+      border-radius: 50%;
+      width: 42px; height: 42px;
+      font-size: 18px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .music-btn:hover {
+      background: rgba(255, 107, 149, 0.35);
+    }
+    .music-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+    }
+    .music-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 0.95rem;
+      color: #ffcfdf;
+    }
+    .music-artist {
+      font-size: 0.7rem;
+      color: #cc8ea5;
+      letter-spacing: 0.5px;
+    }
+    .eq-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 18px;
+    }
+    .eq-bars.paused span { animation-play-state: paused !important; }
+    .eq-bar {
+      width: 3px;
+      background: #ff6b95;
+      border-radius: 2px;
+      animation: eqBounce 0.8s ease-in-out infinite alternate;
+    }
+    .eq-bar:nth-child(1) { animation-delay: 0s; height: 8px; }
+    .eq-bar:nth-child(2) { animation-delay: 0.15s; height: 14px; }
+    .eq-bar:nth-child(3) { animation-delay: 0.3s; height: 10px; }
+    .eq-bar:nth-child(4) { animation-delay: 0.1s; height: 16px; }
+    @keyframes eqBounce {
+      from { height: 4px; }
+      to   { height: 18px; }
+    }
+
+    /* ── Love Letter ── */
+    .love-letter {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.25rem;
+      color: #ffcfdf;
+      line-height: 2;
+      text-align: left;
+      padding: 10px 15px;
+    }
+    .love-letter .signature {
+      text-align: right;
+      margin-top: 15px;
+      color: #ff8aad;
+      font-size: 1.4rem;
+    }
+
+    /* ── Polaroid Gallery ── */
+    .gallery {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .polaroid {
+      background: #fff;
+      border-radius: 4px;
+      padding: 10px 10px 30px;
+      width: 140px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transform: rotate(var(--rot));
+      transition: transform 0.3s;
+    }
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.08);
+    }
+    .polaroid-img {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #ff6b95, #ff9ec0, #ffd1dc);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+    }
+    .polaroid-caption {
+      font-family: 'Dancing Script', cursive;
+      color: #333;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* ── Final CTA ── */
+    .final-message {
+      margin-top: 40px;
+      padding: 25px;
+    }
+    .final-message h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #ff6b95;
+    }
+    .big-heart {
+      font-size: 60px;
+      display: inline-block;
+      animation: heartbeat 1.2s ease-in-out infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15%      { transform: scale(1.15); }
+      30%      { transform: scale(1); }
+      45%      { transform: scale(1.1); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 500px) {
+      .hero h1 { font-size: 2.4rem; }
+      .card { padding: 22px 18px; }
+      .countdown-box { min-width: 70px; padding: 14px 16px; }
+      .countdown-box .num { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating hearts background -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- Music Player -->
+  <div class="music-bar" id="musicBar">
+    <button class="music-btn" id="musicBtn" title="Play / Pause">▶️</button>
+    <div class="eq-bars paused" id="eqBars">
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
+    </div>
+    <div class="music-info">
+      <span class="music-title">Gehra Hua</span>
+      <span class="music-artist">Surya Ragunaathan</span>
+    </div>
+  </div>
+  <!-- Hidden YouTube player -->
+  <div id="ytPlayer" style="position:fixed; top:-9999px; left:-9999px;"></div>
+
+  <div class="container">
+
+    <!-- Envelope to open -->
+    <div class="envelope-wrapper" id="envelope">
+      <div class="envelope-icon">💌</div>
+      <p class="envelope-hint">tap to open</p>
+    </div>
+
+    <!-- ── Revealed Content ── -->
+    <div class="content" id="content">
+
+      <!-- Hero -->
+      <section class="hero" style="animation-delay: 0.2s;">
+        <h1>Happy Valentine's Day</h1>
+        <p class="subtitle">A little something special, just for you ✨</p>
+        <p class="date-line">February 14, 2026</p>
+      </section>
+
+      <div class="divider">♥ ♥ ♥</div>
+
+      <!-- Dinner Details -->
+      <section class="card">
+        <div class="card-icon">🍽️</div>
+        <h2>Tonight's Date</h2>
+        <p>
+          Get ready for a wonderful evening together.<br/>
+          <span class="highlight">📍 Red Phone Booth!</span><br/><br/>
+          <span class="highlight">🕗 Time: 8:00 PM</span><br/><br/>
+          Dress up, feel beautiful, and leave the rest to me. 🌹
+        </p>
+      </section>
+
+      <!-- Countdown -->
+      <section class="countdown-section">
+        <h2>⏳ Counting Down to 8 PM...</h2>
+        <div class="countdown" id="countdown">
+          <div class="countdown-box">
+            <span class="num" id="cd-hours">--</span>
+            <span class="label">Hours</span>
+          </div>
+          <div class="countdown-box">
+            <span class="num" id="cd-mins">--</span>
+            <span class="label">Minutes</span>
+          </div>
+          <div class="countdown-box">
+            <span class="num" id="cd-secs">--</span>
+            <span class="label">Seconds</span>
+          </div>
+        </div>
+        <p id="cd-message" style="margin-top:14px; color:#ff8aad; font-family:'Dancing Script',cursive; font-size:1.2rem; display:none;"></p>
+      </section>
+
+      <div class="divider">♥ ♥ ♥</div>
+
+      <!-- Reasons I Love You -->
+      <section class="card">
+        <div class="card-icon">💖</div>
+        <h2>Reasons I Love You</h2>
+        <ul class="reasons" id="reasons">
+          <li style="animation-delay:0.1s"><span class="heart-bullet">♥</span> Your smile lights up every room you walk into</li>
+          <li style="animation-delay:0.3s"><span class="heart-bullet">♥</span> The way you laugh at my terrible jokes</li>
+          <li style="animation-delay:0.5s"><span class="heart-bullet">♥</span> How you always know exactly what to say</li>
+          <li style="animation-delay:0.7s"><span class="heart-bullet">♥</span> How safe and at peace I feel when I'm with you</li>
+          <li style="animation-delay:0.9s"><span class="heart-bullet">♥</span> Every single moment I get to spend with you</li>
+          <li style="animation-delay:1.1s"><span class="heart-bullet">♥</span> The way you make ordinary days feel magical</li>
+          <li style="animation-delay:1.3s"><span class="heart-bullet">♥</span> You're my favorite hello and my hardest goodbye 💕</li>
+        </ul>
+      </section>
+
+      <div class="divider">♥ ♥ ♥</div>
+
+      <!-- Polaroid Memories -->
+      <section class="card">
+        <div class="card-icon">📸</div>
+        <h2>Our Little Moments</h2>
+        <div class="gallery">
+          <div class="polaroid" style="--rot: -4deg;">
+            <div class="polaroid-img" style="padding:0; overflow:hidden;">
+              <video src="IMG_5414.mov" muted autoplay loop playsinline style="width:120px; height:120px; object-fit:cover; border-radius:2px;"></video>
+            </div>
+            <div class="polaroid-caption">Us being us</div>
+          </div>
+          <div class="polaroid" style="--rot: 3deg;">
+            <div class="polaroid-img" style="padding:0; overflow:hidden;">
+              <img src="drives.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+            </div>
+            <div class="polaroid-caption">Late night drives</div>
+          </div>
+          <div class="polaroid" style="--rot: -2deg;">
+            <div class="polaroid-img" style="padding:0; overflow:hidden;">
+              <img src="food.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+            </div>
+            <div class="polaroid-caption">Random food runs</div>
+          </div>
+          <div class="polaroid" style="--rot: 5deg;">
+            <div class="polaroid-img" style="padding:0; overflow:hidden;">
+              <img src="late_night.jpg" style="width:120px; height:120px; object-fit:cover; border-radius:2px;">
+            </div>
+            <div class="polaroid-caption">3 AM talks</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider">♥ ♥ ♥</div>
+
+      <!-- Mini Quiz -->
+      <section class="card">
+        <div class="card-icon">💭</div>
+        <h2>How Well Do We Know Us?</h2>
+        <div style="text-align:center;">
+          <p style="font-family:'Dancing Script',cursive; font-size:1.2rem; color:#ffcfdf; margin-bottom:20px;" id="quizQ"></p>
+          <div id="quizOptions" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+          </div>
+          <p id="quizResult" style="font-family:'Dancing Script',cursive; font-size:1.1rem; color:#ff8aad; margin-top:16px; display:none;"></p>
+          <button id="quizNext" onclick="nextQuizQuestion()" style="background:rgba(255,107,149,0.2); border:1px solid rgba(255,107,149,0.4); border-radius:10px; padding:10px 22px; color:#ffcfdf; cursor:pointer; margin-top:16px; font-family:'Quicksand',sans-serif; display:none;">Next Question →</button>
+        </div>
+      </section>
+
+      <div class="divider">♥ ♥ ♥</div>
+
+      <!-- Love Letter -->
+      <section class="card">
+        <div class="card-icon">📝</div>
+        <h2>A Little Note</h2>
+        <div class="love-letter">
+          <p>
+            To my favorite person in the world,<br/><br/>
+            Every day with you feels like Valentine's Day.
+            You make everything brighter, warmer, and infinitely
+            more beautiful. Tonight is about celebrating <em>us, </em>
+            the little things, the big things, and everything
+            in between.<br/><br/>
+            I can't wait to see you at 8. 🌹<br/>
+          </p>
+          <p class="signature">— With all my love 💋</p>
+        </div>
+      </section>
+
+      <!-- Final Message -->
+      <section class="final-message">
+        <div class="big-heart">❤️</div>
+        <h2>See you tonight, beautiful.</h2>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    // ── Floating Hearts ──
+    const heartsBg = document.getElementById('heartsBg');
+    const heartEmojis = ['❤️','💕','💖','💗','💓','💘','💝','🩷','🤍','✨'];
+    function spawnHeart() {
+      const heart = document.createElement('span');
+      heart.classList.add('floating-heart');
+      heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.fontSize = (14 + Math.random() * 20) + 'px';
+      heart.style.animationDuration = (6 + Math.random() * 8) + 's';
+      heart.style.animationDelay = Math.random() * 2 + 's';
+      heartsBg.appendChild(heart);
+      setTimeout(() => heart.remove(), 16000);
+    }
+    setInterval(spawnHeart, 400);
+
+    // ── Sparkle Cursor ──
+    document.addEventListener('mousemove', (e) => {
+      if (Math.random() > 0.7) return;
+      const sparkle = document.createElement('span');
+      sparkle.classList.add('sparkle');
+      sparkle.textContent = ['✨','💫','⭐','💖'][Math.floor(Math.random()*4)];
+      sparkle.style.left = e.clientX + 'px';
+      sparkle.style.top = e.clientY + 'px';
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 800);
+    });
+
+    // ── Envelope Open ──
+    const envelope = document.getElementById('envelope');
+    const content = document.getElementById('content');
+    envelope.addEventListener('click', () => {
+      envelope.style.transition = 'opacity 0.5s, transform 0.5s';
+      envelope.style.opacity = '0';
+      envelope.style.transform = 'scale(1.3)';
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        content.classList.add('show');
+      }, 500);
+    });
+
+    // ── Countdown to 8 PM today ──
+    function updateCountdown() {
+      const now = new Date();
+      const target = new Date();
+      target.setHours(20, 0, 0, 0); // 8 PM today
+
+      let diff = target - now;
+      const msgEl = document.getElementById('cd-message');
+
+      if (diff <= 0) {
+        document.getElementById('cd-hours').textContent = '0';
+        document.getElementById('cd-mins').textContent = '0';
+        document.getElementById('cd-secs').textContent = '0';
+        msgEl.style.display = 'block';
+        msgEl.textContent = "It's time! Have the most magical evening 🥂✨";
+        return;
+      }
+
+      const hours = Math.floor(diff / 3600000);
+      diff %= 3600000;
+      const mins = Math.floor(diff / 60000);
+      diff %= 60000;
+      const secs = Math.floor(diff / 1000);
+
+      document.getElementById('cd-hours').textContent = hours;
+      document.getElementById('cd-mins').textContent = mins.toString().padStart(2, '0');
+      document.getElementById('cd-secs').textContent = secs.toString().padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ── YouTube IFrame API for Gehra Hua ──
+    let ytPlayer, isPlaying = false;
+    const musicBtn = document.getElementById('musicBtn');
+    const eqBars = document.getElementById('eqBars');
+
+    // Load YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('ytPlayer', {
+        height: '1',
+        width: '1',
+        videoId: 'GX9x62kFsVU',
+        playerVars: {
+          autoplay: 0,
+          loop: 1,
+          playlist: 'GX9x62kFsVU'
+        },
+        events: {
+          onReady: function() {
+            ytPlayer.setVolume(60);
+          }
+        }
+      });
+    };
+
+    musicBtn.addEventListener('click', () => {
+      if (!ytPlayer) return;
+      if (!isPlaying) {
+        ytPlayer.playVideo();
+        isPlaying = true;
+        musicBtn.textContent = '⏸️';
+        eqBars.classList.remove('paused');
+      } else {
+        ytPlayer.pauseVideo();
+        isPlaying = false;
+        musicBtn.textContent = '▶️';
+        eqBars.classList.add('paused');
+      }
+    });
+
+    // Auto-play when envelope is opened
+    const origEnvelopeClick = envelope.onclick;
+    envelope.addEventListener('click', () => {
+      setTimeout(() => {
+        if (ytPlayer && !isPlaying) {
+          ytPlayer.playVideo();
+          isPlaying = true;
+          musicBtn.textContent = '⏸️';
+          eqBars.classList.remove('paused');
+        }
+      }, 800);
+    });
+
+    // ── Mini Quiz ──
+    const quizQuestions = [
+      {
+        q: "What's our go-to coffee spot?",
+        allowRetry: true,
+        options: [
+          { text: "Starbucks", correct: false, msg: "Nope, not there 😅 Try again!" },
+          { text: "151 Coffee", correct: true, msg: "Yes! Our spot 🥰☕" },
+          { text: "Blue Bottle", correct: false, msg: "Wrong! Try again 😄" }
+        ]
+      },
+      {
+        q: "What's one movie that we both love?",
+        allowRetry: false,
+        allCorrect: true,
+        options: [
+          { text: "YJHD", correct: true, msg: "Yesss! That one's special 🎬💕" },
+          { text: "ZNMD", correct: true, msg: "Love that one too! 🌊✨" },
+          { text: "Dilwale Dulhania Le Jayenge", correct: true, msg: "Classic! We love it 😄💕" }
+        ]
+      },
+      {
+        q: "What's our first song that we both relate to each other?",
+        allowRetry: true,
+        options: [
+          { text: "Perfect - Ed Sheeran", correct: false, msg: "Not quite 😅 Try again!" },
+          { text: "Strawberries & Cigarettes", correct: true, msg: "Our song 🍓🎶💕" },
+          { text: "Tum Hi Ho", correct: false, msg: "Wrong, but sweet guess 🥰 Try again!" }
+        ]
+      }
+    ];
+    let currentQuiz = 0;
+
+    function loadQuizQuestion() {
+      if (currentQuiz >= quizQuestions.length) {
+        document.getElementById('quizQ').textContent = "We're pretty great together, aren't we? 💕";
+        document.getElementById('quizOptions').innerHTML = '';
+        document.getElementById('quizResult').textContent = "You passed with flying colors! 🌟";
+        document.getElementById('quizResult').style.display = 'block';
+        document.getElementById('quizResult').style.color = '#6bff95';
+        document.getElementById('quizNext').style.display = 'none';
+        return;
+      }
+      
+      const quiz = quizQuestions[currentQuiz];
+      document.getElementById('quizQ').textContent = quiz.q;
+      document.getElementById('quizResult').style.display = 'none';
+      document.getElementById('quizNext').style.display = 'none';
+      
+      const optionsHtml = quiz.options.map((opt, i) => 
+        `<button class="quiz-opt" onclick="checkAnswer(${opt.correct ? 1 : 0}, '${opt.msg}', ${quiz.allowRetry}, ${quiz.allCorrect || false})" style="background:rgba(255,107,149,0.1); border:1px solid rgba(255,107,149,0.3); border-radius:12px; padding:12px 24px; color:#ffcfdf; cursor:pointer; width:70%; max-width:300px; font-family:'Quicksand',sans-serif; transition:all 0.3s;">${opt.text}</button>`
+      ).join('');
+      
+      document.getElementById('quizOptions').innerHTML = optionsHtml;
+    }
+
+    function checkAnswer(isCorrect, message, allowRetry, allCorrect) {
+      const result = document.getElementById('quizResult');
+      const options = document.querySelectorAll('.quiz-opt');
+      
+      if (!allowRetry || isCorrect || allCorrect) {
+        options.forEach(opt => {
+          opt.disabled = true;
+          opt.style.opacity = '0.5';
+          opt.style.cursor = 'default';
+        });
+      }
+      
+      result.textContent = message;
+      result.style.display = 'block';
+      
+      if (isCorrect || allCorrect) {
+        result.style.color = '#6bff95';
+        // If this is the last question, auto-advance after a delay
+        if (currentQuiz === quizQuestions.length - 1) {
+          setTimeout(() => {
+            currentQuiz++;
+            loadQuizQuestion();
+          }, 1500);
+        } else {
+          document.getElementById('quizNext').style.display = 'inline-block';
+        }
+      } else {
+        result.style.color = '#ff8aad';
+      }
+    }
+
+    function nextQuizQuestion() {
+      currentQuiz++;
+      loadQuizQuestion();
+    }
+
+    // Initialize the quiz on page load
+    loadQuizQuestion();
+  </script>
+
+</body>
+</html>
